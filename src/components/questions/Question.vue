@@ -1,9 +1,5 @@
 <template>
-  <van-field
-    :name="'' + this.questionData.seq"
-    :border="false"
-    :rules="[{ required: true }]"
-  >
+  <van-field :name="'' + this.questionData.seq" :border="false">
     <template #input>
       <p>{{ `${this.questionData.seq}. ${this.questionData.questionDesc}` }}</p>
       <van-radio-group v-model="checked" direction="horizontal">
