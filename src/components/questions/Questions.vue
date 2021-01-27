@@ -3,6 +3,7 @@
     <van-form v-if="!this.error" @submit="commit" scroll-to-error ref="form">
       <customer-info
         :customerName="state.customerName"
+        :customerAge="state.customerAge"
         :customerPhone="state.customerPhone"
       />
 
@@ -58,7 +59,12 @@ export default {
   methods: {
     commit(values) {
       this.isCommitting = true;
-      const { customerName, customerPhone, ...restValues } = values;
+      const {
+        customerName,
+        customerAge,
+        customerPhone,
+        ...restValues
+      } = values;
       const questionAnswers = Object.entries(restValues).map(
         ([questionSeq, answerSeq]) => ({
           questionSeq,
@@ -67,6 +73,7 @@ export default {
       );
       const answers = {
         customerName,
+        customerAge: +customerAge,
         customerPhone,
         questionAnswers
       };
@@ -88,6 +95,7 @@ export default {
   setup() {
     const state = reactive({
       customerName: "",
+      customerAge: "",
       customerPhone: "",
       questionAnswers: []
     });
