@@ -16,7 +16,7 @@
     @change-step="changeStep"
   />
   <Questionnaire v-else @change-step="changeStep" />
-  <footer>Power By XXX</footer>
+  <footer>Power By chengyuxuan</footer>
 </template>
 
 <script>
