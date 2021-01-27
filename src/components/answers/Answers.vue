@@ -1,11 +1,14 @@
 <template>
   <h3>测试结果</h3>
-  <p>{{ bankNames }}</p>
-  <answer
-    v-for="item in this.result.matchBanks"
-    :key="item.bankId"
-    :data="item"
-  />
+  <div v-if="this.notEmpty">
+    <p>{{ bankNames }}</p>
+    <answer
+      v-for="item in this.result.matchBanks"
+      :key="item.bankId"
+      :data="item"
+    />
+  </div>
+  <van-empty v-else :description="this.bankNames" />
 </template>
 <script>
 import Answer from "./Answer";
@@ -19,10 +22,15 @@ export default {
     result: Object
   },
   computed: {
+    notEmpty() {
+      return this.result.matchBanks && this.result.matchBanks.length > 0;
+    },
     bankNames() {
-      return `能满足条件的银行有${this.result.matchBanks
-        .map(matchBank => matchBank.bankName)
-        .join("、")}`;
+      return this.notEmpty
+        ? `能满足条件的银行有${this.result.matchBanks
+            .map(matchBank => matchBank.bankName)
+            .join("、")}`
+        : "暂无满足条件的银行";
     }
   }
 };
