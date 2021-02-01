@@ -1,17 +1,11 @@
 <template>
-  <van-field
-    name="customerName"
-    v-model="state.name"
-    label="姓名"
-    required
-    :rules="[{ required: true, message: '请填写姓名' }]"
-  />
+  <van-field name="customerName" v-model="state.name" label="姓名" />
   <van-field
     name="customerAge"
     v-model="state.age"
     type="digit"
     label="年龄"
-    :rules="[{ required: /\d+/, message: '年龄格式错误' }]"
+    :rules="[{ pattern: /^(\s*|\d+)$/, message: '年龄格式错误' }]"
   />
   <van-field
     name="customerPhone"
