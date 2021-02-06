@@ -3,7 +3,6 @@
     name="customerName"
     v-model="state.name"
     label="姓名"
-    required
     :rules="[{ required: true, message: '请填写姓名' }]"
   />
   <van-field
@@ -18,7 +17,6 @@
     v-model="state.tel"
     type="tel"
     label="手机号"
-    required
     :rules="[{ pattern: /1[3-9]\d{9}/, message: '手机号格式错误' }]"
   />
 </template>
@@ -29,7 +27,7 @@ export default {
   name: "CustomerInfo",
   props: {
     customerName: String,
-    customerAge: Number,
+    customerAge: [String, Number],
     customerPhone: String
   },
   setup(props) {

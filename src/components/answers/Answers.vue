@@ -21,6 +21,7 @@ export default {
     questionnaireId: Number,
     result: Object
   },
+  emits: ["change-step"],
   computed: {
     notEmpty() {
       return this.result.matchBanks && this.result.matchBanks.length > 0;

@@ -1,0 +1,23 @@
+{
+  "id": "2368252",
+  "name": "questionnaire",
+  "font_family": "qn-icons",
+  "css_prefix_text": "qn-icons-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "15935096",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "15935097",
+      "name": "lock",
+      "font_class": "lock",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    }
+  ]
+}

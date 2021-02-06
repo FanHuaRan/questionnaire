@@ -1,4 +1,9 @@
-const { QUESTIONNAIRES, QUESTIONS, ANSWERS } = require("./mocks/MockData");
+const {
+  QUESTIONNAIRES,
+  QUESTIONS,
+  ANSWERS,
+  LOGIN_SUCCESS
+} = require("./mocks/MockData");
 
 module.exports = {
   configureWebpack: {
@@ -20,6 +25,10 @@ module.exports = {
 
         app.post("/api/questionnaire_survey/commit", (_req, res) => {
           res.json(ANSWERS);
+        });
+
+        app.post("/api/oauth/token", (_req, res) => {
+          res.json(LOGIN_SUCCESS);
         });
       }
     }

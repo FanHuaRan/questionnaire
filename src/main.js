@@ -12,7 +12,8 @@ import {
   Skeleton,
   Empty,
   Toast,
-  Loading
+  Loading,
+  Icon
 } from "vant";
 
 const app = createApp(App);
@@ -28,5 +29,6 @@ app.use(Skeleton);
 app.use(Empty);
 app.use(Toast);
 app.use(Loading);
+app.use(Icon);
 
 app.mount("#app");
