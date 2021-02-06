@@ -270,11 +270,16 @@ const LOGIN_FAILED = {
   error: "unauthorized"
 };
 
+const TIMEOUT = {
+  code: 40001
+};
+
 module.exports = {
   QUESTIONNAIRES,
   QUESTIONS,
   ANSWERS,
   ERROR,
   LOGIN_SUCCESS,
-  LOGIN_FAILED
+  LOGIN_FAILED,
+  TIMEOUT
 };

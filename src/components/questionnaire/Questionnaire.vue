@@ -44,8 +44,11 @@ export default {
         this.isRequesting = false;
       })
       .catch(error => {
-        error = JSON.parse(error);
         if ([40001, 40005].includes(error.code)) {
+          this.$toast({
+            message: "登录失效",
+            position: "bottom"
+          });
           this.$emit("change-step", 0);
         } else {
           this.$toast({

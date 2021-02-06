@@ -14,7 +14,7 @@ class Util {
       .then(result => {
         const { data } = result;
         if (data.code !== 20000) {
-          throw new Error(JSON.stringify(data));
+          throw data;
         }
         return data.data;
       });
@@ -30,7 +30,7 @@ class Util {
       .then(result => {
         const { data } = result;
         if (data.code !== 20000) {
-          throw new Error(JSON.stringify(data));
+          throw data;
         }
         return data.data;
       });
@@ -46,7 +46,7 @@ class Util {
       .then(result => {
         const { data } = result;
         if (data.code !== 20000) {
-          throw new Error(JSON.stringify(data));
+          throw data;
         }
         return data.data;
       });
@@ -65,7 +65,7 @@ class Util {
       .then(result => {
         const { data } = result;
         if (data.code !== 20000) {
-          throw new Error(JSON.stringify(data));
+          throw data;
         }
         access_token = data.data.access_token;
         return data.data;
