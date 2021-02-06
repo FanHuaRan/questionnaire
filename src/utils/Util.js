@@ -55,13 +55,35 @@ class Util {
   static login(data) {
     const { username, password } = data;
     return axios
-      .post("/api/oauth/token", {
-        username,
-        password: md5(password),
-        grant_type: "password",
-        client_id: "client_qualification_web",
-        client_secret: "c963b182e7539a2b073e8a8fbfd85356"
-      })
+      .post(
+        "/api/oauth/token",
+        {
+          username,
+          password: md5(password),
+          grant_type: "password",
+          client_id: "client_qualification_web",
+          client_secret: "c963b182e7539a2b073e8a8fbfd85356"
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          transformRequest: [
+            data => {
+              let ret = "";
+              for (let it in data) {
+                ret +=
+                  encodeURIComponent(it) +
+                  "=" +
+                  encodeURIComponent(data[it]) +
+                  "&";
+              }
+              ret = ret.substring(0, ret.lastIndexOf("&"));
+              return ret;
+            }
+          ]
+        }
+      )
       .then(result => {
         const { data } = result;
         if (data.code !== 20000) {
