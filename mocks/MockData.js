@@ -258,9 +258,28 @@ const ERROR = {
   detail: "系统异常"
 };
 
+const LOGIN_SUCCESS = {
+  code: 20000,
+  data: {
+    access_token: "xxxxxx"
+  }
+};
+
+const LOGIN_FAILED = {
+  code: 40006,
+  error: "unauthorized"
+};
+
+const TIMEOUT = {
+  code: 40001
+};
+
 module.exports = {
   QUESTIONNAIRES,
   QUESTIONS,
   ANSWERS,
-  ERROR
+  ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  TIMEOUT
 };

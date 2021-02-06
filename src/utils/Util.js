@@ -1,13 +1,20 @@
 import axios from "axios";
+import md5 from "md5";
+
+let access_token = "";
 
 class Util {
   static getQuestionnaires() {
     return axios
-      .get("http://123.206.30.153:8080/api/questionnaire_survey/all")
+      .get("/api/questionnaire_survey/all", {
+        headers: {
+          Authorization: "bearer" + access_token
+        }
+      })
       .then(result => {
         const { data } = result;
         if (data.code !== 20000) {
-          throw new Error("error");
+          throw data;
         }
         return data.data;
       });
@@ -15,13 +22,15 @@ class Util {
 
   static getQuestions(id) {
     return axios
-      .get(
-        `http://123.206.30.153:8080/api/questionnaire_survey/get?questionnaire_id=${id}`
-      )
+      .get(`/api/questionnaire_survey/get?questionnaire_id=${id}`, {
+        headers: {
+          Authorization: "bearer" + access_token
+        }
+      })
       .then(result => {
         const { data } = result;
         if (data.code !== 20000) {
-          throw new Error(data);
+          throw data;
         }
         return data.data;
       });
@@ -29,12 +38,36 @@ class Util {
 
   static commit(data) {
     return axios
-      .post("http://123.206.30.153:8080/api/questionnaire_survey/commit", data)
+      .post("/api/questionnaire_survey/commit", data, {
+        headers: {
+          Authorization: "bearer" + access_token
+        }
+      })
       .then(result => {
         const { data } = result;
         if (data.code !== 20000) {
-          throw new Error(data);
+          throw data;
         }
+        return data.data;
+      });
+  }
+
+  static login(data) {
+    const { username, password } = data;
+    return axios
+      .post("/api/oauth/token", {
+        username,
+        password: md5(password),
+        grant_type: "password",
+        client_id: "client_qualification_web",
+        client_secret: "c963b182e7539a2b073e8a8fbfd85356"
+      })
+      .then(result => {
+        const { data } = result;
+        if (data.code !== 20000) {
+          throw data;
+        }
+        access_token = data.data.access_token;
         return data.data;
       });
   }

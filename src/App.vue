@@ -1,25 +1,29 @@
 <template>
-  <h1 class="title">诚誉轩</h1>
-  <h3 class="description">测一测贷款资质</h3>
-  <van-button v-if="this.step !== 0" class="return-btn" round @click="prev"
-    >返回</van-button
-  >
-  <Questions
-    v-if="this.step === 1"
-    :questionnaireId="this.questionnaireId"
-    @change-step="changeStep"
-  />
-  <Answers
-    v-else-if="this.step === 2"
-    :questionnaireId="this.questionnaireId"
-    :result="this.result"
-    @change-step="changeStep"
-  />
-  <Questionnaire v-else @change-step="changeStep" />
-  <footer>Power By chengyuxuan</footer>
+  <Login v-if="this.step === 0" @change-step="changeStep" />
+  <div v-else class="questionnaire-wrapper">
+    <h1 class="title">诚誉轩</h1>
+    <h3 class="description">测一测贷款资质</h3>
+    <van-button v-if="this.step > 1" class="return-btn" round @click="prev"
+      >返回</van-button
+    >
+    <Questionnaire v-if="this.step === 1" @change-step="changeStep" />
+    <Questions
+      v-if="this.step === 2"
+      :questionnaireId="this.questionnaireId"
+      @change-step="changeStep"
+    />
+    <Answers
+      v-else-if="this.step === 3"
+      :questionnaireId="this.questionnaireId"
+      :result="this.result"
+      @change-step="changeStep"
+    />
+    <footer>Power By chengyuxuan</footer>
+  </div>
 </template>
 
 <script>
+import Login from "./components/login/Login";
 import Questionnaire from "./components/questionnaire/Questionnaire";
 import Questions from "./components/questions/Questions";
 import Answers from "./components/answers/Answers";
@@ -27,6 +31,7 @@ import Answers from "./components/answers/Answers";
 export default {
   name: "App",
   components: {
+    Login,
     Questionnaire,
     Questions,
     Answers
@@ -40,10 +45,13 @@ export default {
   },
   methods: {
     changeStep(step, data) {
-      if (step === 1) {
+      if (step === 2) {
         this.questionnaireId = data;
-      } else if (step === 2) {
+      } else if (step === 3) {
         this.result = data;
+      } else {
+        this.questionnaireId = -1;
+        this.result = {};
       }
       this.step = step;
     },
@@ -62,7 +70,12 @@ body {
   padding: 0;
 }
 #app {
+  max-width: 100%;
+  height: 100%;
+}
+.questionnaire-wrapper {
   max-width: 1200px;
+  height: 100%;
   margin: 0 auto;
   padding: 0 24px;
 }

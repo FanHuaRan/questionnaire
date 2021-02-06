@@ -23,7 +23,7 @@ export default {
   name: "CustomerInfo",
   props: {
     customerName: String,
-    customerAge: Number,
+    customerAge: [String, Number],
     customerPhone: String
   },
   setup(props) {

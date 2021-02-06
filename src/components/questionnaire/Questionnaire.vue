@@ -25,6 +25,7 @@ import Util from "../../utils/Util";
 
 export default {
   name: "Questionnaire",
+  emits: ["change-step"],
   data() {
     return {
       isRequesting: true,
@@ -33,22 +34,29 @@ export default {
   },
   methods: {
     handleClick(id) {
-      this.$emit("change-step", 1, id);
+      this.$emit("change-step", 2, id);
     }
   },
   created() {
     Util.getQuestionnaires()
       .then(result => {
         this.questionnaires = result;
+        this.isRequesting = false;
       })
       .catch(error => {
-        this.$toast({
-          message: error ? error.detail || "系统异常" : "系统异常",
-          position: "bottom"
-        });
-      })
-      .finally(() => {
-        this.isRequesting = false;
+        if ([40001, 40005].includes(error.code)) {
+          this.$toast({
+            message: "登录失效",
+            position: "bottom"
+          });
+          this.$emit("change-step", 0);
+        } else {
+          this.$toast({
+            message: error ? error.detail || "系统异常" : "系统异常",
+            position: "bottom"
+          });
+          this.isRequesting = false;
+        }
       });
   }
 };

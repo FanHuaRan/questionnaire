@@ -46,6 +46,7 @@ export default {
   props: {
     questionnaireId: Number
   },
+  emits: ["change-step"],
   data() {
     return {
       error: null,
@@ -79,16 +80,23 @@ export default {
       };
       Util.commit({ ...answers, questionnaireId: this.questionnaireId })
         .then(data => {
-          this.$emit("change-step", 2, data);
+          this.$emit("change-step", 3, data);
+          this.isCommitting = false;
         })
         .catch(error => {
-          this.$toast({
-            message: error ? error.detail || "系统异常" : "系统异常",
-            position: "bottom"
-          });
-        })
-        .finally(() => {
-          this.isCommitting = false;
+          if ([40001, 40005].includes(error.code)) {
+            this.$toast({
+              message: "登录失效",
+              position: "bottom"
+            });
+            this.$emit("change-step", 0);
+          } else {
+            this.$toast({
+              message: error ? error.detail || "系统异常" : "系统异常",
+              position: "bottom"
+            });
+            this.isCommitting = false;
+          }
         });
     }
   },
@@ -108,12 +116,19 @@ export default {
     Util.getQuestions(this.questionnaireId)
       .then(result => {
         this.questionnaire = result;
+        this.isRequestion = false;
       })
       .catch(error => {
-        this.error = error;
-      })
-      .finally(() => {
-        this.isRequestion = false;
+        if ([40001, 40005].includes(error.code)) {
+          this.$toast({
+            message: "登录失效",
+            position: "bottom"
+          });
+          this.$emit("change-step", 0);
+        } else {
+          this.error = error;
+          this.isRequestion = false;
+        }
       });
   }
 };
