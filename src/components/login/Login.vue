@@ -34,7 +34,6 @@
           class="submit-button"
           block
           type="primary"
-          size="small"
           native-type="submit"
           >提交</van-button
         >
@@ -100,6 +99,7 @@ export default {
   max-width: 450px;
 }
 .login-content .van-cell {
+  margin-top: 16px;
   background-color: transparent;
 }
 .login-content .van-field__control {
