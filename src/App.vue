@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      step: 0,
+      step: 1,
       questionnaireId: -1,
       result: {}
     };
