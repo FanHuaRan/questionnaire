@@ -7,7 +7,7 @@ const tokenKey = "vue_admin_template_token";
 class Util {
   static getQuestionnaires() {
     return axios
-      .get("/api/questionnaire_survey/all", {
+      .get("http://123.206.30.153:8080/api/questionnaire_survey/all", {
         headers: {
           Authorization: "bearer" + Cookies.get(tokenKey)
         }
@@ -23,11 +23,14 @@ class Util {
 
   static getQuestions(id) {
     return axios
-      .get(`/api/questionnaire_survey/get?questionnaire_id=${id}`, {
-        headers: {
-          Authorization: "bearer" + Cookies.get(tokenKey)
+      .get(
+        `http://123.206.30.153:8080/api/questionnaire_survey/get?questionnaire_id=${id}`,
+        {
+          headers: {
+            Authorization: "bearer" + Cookies.get(tokenKey)
+          }
         }
-      })
+      )
       .then(result => {
         const { data } = result;
         if (data.code !== 20000) {
@@ -39,11 +42,15 @@ class Util {
 
   static commit(data) {
     return axios
-      .post("/api/questionnaire_survey/commit", data, {
-        headers: {
-          Authorization: "bearer" + Cookies.get(tokenKey)
+      .post(
+        "http://123.206.30.153:8080/api/questionnaire_survey/commit",
+        data,
+        {
+          headers: {
+            Authorization: "bearer" + Cookies.get(tokenKey)
+          }
         }
-      })
+      )
       .then(result => {
         const { data } = result;
         if (data.code !== 20000) {
@@ -57,7 +64,7 @@ class Util {
     const { username, password } = data;
     return axios
       .post(
-        "/api/oauth/token",
+        "http://123.206.30.153:8080/api/oauth/token",
         {
           username,
           password: md5(password),
