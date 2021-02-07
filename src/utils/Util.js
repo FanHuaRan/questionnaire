@@ -1,14 +1,15 @@
 import axios from "axios";
 import md5 from "md5";
+import Cookies from "js-cookie";
 
-let access_token = "";
+const tokenKey = "vue_admin_template_token";
 
 class Util {
   static getQuestionnaires() {
     return axios
       .get("/api/questionnaire_survey/all", {
         headers: {
-          Authorization: "bearer" + access_token
+          Authorization: "bearer" + Cookies.get(tokenKey)
         }
       })
       .then(result => {
@@ -24,7 +25,7 @@ class Util {
     return axios
       .get(`/api/questionnaire_survey/get?questionnaire_id=${id}`, {
         headers: {
-          Authorization: "bearer" + access_token
+          Authorization: "bearer" + Cookies.get(tokenKey)
         }
       })
       .then(result => {
@@ -40,7 +41,7 @@ class Util {
     return axios
       .post("/api/questionnaire_survey/commit", data, {
         headers: {
-          Authorization: "bearer" + access_token
+          Authorization: "bearer" + Cookies.get(tokenKey)
         }
       })
       .then(result => {
@@ -89,7 +90,7 @@ class Util {
         if (data.code !== 20000) {
           throw data;
         }
-        access_token = data.data.access_token;
+        Cookies.set(tokenKey, data.data.access_token);
         return data.data;
       });
   }
