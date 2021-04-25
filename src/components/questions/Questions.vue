@@ -128,7 +128,6 @@ export default {
             value: ""
           };
         });
-        debugger;
         this.isRequestion = false;
       })
       .catch(error => {
