@@ -2,6 +2,7 @@
   <van-skeleton title :row="10" :loading="this.isRequestion">
     <van-form v-if="!this.error" @submit="commit" scroll-to-error ref="form">
       <customer-info
+        :config-headers="this.configHeaders"
         :customerName="state.customerName"
         :customerAge="state.customerAge"
         :customerPhone="state.customerPhone"
@@ -51,6 +52,7 @@ export default {
     return {
       error: null,
       isRequestion: true,
+      configHeaders: [],
       isCommitting: false,
       questionnaire: {
         questions: []
@@ -66,17 +68,21 @@ export default {
         customerPhone,
         ...restValues
       } = values;
-      const questionAnswers = Object.entries(restValues).map(
-        ([questionSeq, answerSeq]) => ({
+
+      const questionAnswers = Object.entries(restValues)
+        .map(([questionSeq, answerSeq]) => ({
           questionSeq,
           answerSeq
-        })
-      );
+        }))
+        .filter(
+          p => p.questionSeq !== undefined && p.questionSeq !== "undefined"
+        );
       const answers = {
         customerName,
         customerAge: +customerAge,
         customerPhone,
-        questionAnswers
+        questionAnswers,
+        configHeaders: this.configHeaders
       };
       Util.commit({ ...answers, questionnaireId: this.questionnaireId })
         .then(data => {
@@ -116,6 +122,13 @@ export default {
     Util.getQuestions(this.questionnaireId)
       .then(result => {
         this.questionnaire = result;
+        this.configHeaders = result.configHeaders.map(p => {
+          return {
+            name: p,
+            value: ""
+          };
+        });
+        debugger;
         this.isRequestion = false;
       })
       .catch(error => {
